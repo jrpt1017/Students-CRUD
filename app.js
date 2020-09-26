@@ -20,6 +20,7 @@ app.use('/students', studentsRouter);
 mongoose.connect('mongodb://localhost:27017/students', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
 }).catch(error => {
     console.log(`Initial Connection Error: ${error}`);
 })
