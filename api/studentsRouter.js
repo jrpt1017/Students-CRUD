@@ -25,14 +25,44 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    const {
+        firstName,
+        middleName,
+        lastName
+    } = req.body.name;
+    const {
+        houseNumber,
+        streetName,
+        municipality,
+        postalCode
+    } = req.body.address;
+    const {
+        brgyNumber,
+        zoneNumber
+    } = req.body.address.brgy;
     const data = new Student({
-        name: req.body.name,
+        name: {
+            firstName,
+            middleName,
+            lastName,
+        },
         age: req.body.age,
+        address: {
+            houseNumber,
+            streetName,
+            municipality,
+            brgy: {
+                brgyNumber,
+                zoneNumber
+            },
+            postalCode,
+        }
     });
     try {
         const student = await data.save();
+        console.log(student)
         res.status(201).json({
-            message: `Successfully inserted to DB: ${req.body.name}`
+            message: `Successfully inserted to DB!`
         });
     } catch (error) {
         res.status(400).json({
