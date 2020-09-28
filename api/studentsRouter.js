@@ -98,20 +98,53 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.patch('/:id', async (req, res) => {
-    const updateData = new Student({
-        name: req.body.name,
-        age: req.body.age,
-    });
+    const {
+        firstName,
+        middleName,
+        lastName
+    } = req.body.name;
+    const {
+        houseNumber,
+        streetName,
+        municipality,
+        postalCode
+    } = req.body.address;
+    const {
+        brgyNumber,
+        zoneNumber
+    } = req.body.address.brgy;
     try {
         const student = await Student.findById(req.params.id);
 
-        if (req.body.name) {
-            student.name = req.body.name;
+        if (firstName) {
+            student.name.firstName = firstName;
         }
-        if (req.body.age) {
-            student.age = req.body.age;
+        if (middleName) {
+            student.name.middleName = middleName;
+        }
+        if (lastName) {
+            student.name.lastName = lastName;
         }
 
+        if (houseNumber) {
+            student.address.houseNumber = houseNumber;
+        }
+        if (streetName) {
+            student.address.streetName = streetName;
+        }
+        if (municipality) {
+            student.address.municipality = municipality;
+        }
+        if (postalCode) {
+            student.address.postalCode = postalCode;
+        }
+
+        if (brgyNumber) {
+            student.address.brgyNumber = brgyNumber;
+        }
+        if (zoneNumber) {
+            student.address.zoneNumber = zoneNumber;
+        }
         await student.save();
 
         res.status(201).json({
