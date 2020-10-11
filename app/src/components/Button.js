@@ -25,7 +25,7 @@ const ButtonComp = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Button variant="contained" onClick={callService}>Default</Button>
+      <Button variant="contained" onClick={callService()}>Default</Button>
       <Button variant="contained" color="primary">
       Primary
       </Button>
