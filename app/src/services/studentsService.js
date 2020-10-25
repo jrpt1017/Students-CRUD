@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const requestString = 'http://localhost:3000/students';
 
-export const getAllStudents = async () => {
+export const getStudents = async () => {
   try {
     const students = await axios.get(requestString);
     return students.data;

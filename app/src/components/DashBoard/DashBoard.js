@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,7 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import {getAllStudents} from '../../services/studentsService';
+import {addStudent, getAllStudents} from '../../redux/actions/index';
+import {store} from '../../redux/store/index';
 
 const columns = [
   { id: 'name', label: 'First Name', minWidth: 170 },
@@ -59,8 +61,14 @@ const useStyles = makeStyles({
 
 const DashBoard = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const students = useSelector(state => state.students)
+
+  useEffect(() => {
+    dispatch(getAllStudents());
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -70,6 +78,7 @@ const DashBoard = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+console.count()
 
   return (
     <Paper className={classes.root}>
