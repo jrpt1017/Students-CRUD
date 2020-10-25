@@ -9,8 +9,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import {addStudent, getAllStudents} from '../../redux/actions/index';
-import {store} from '../../redux/store/index';
+import {getAllStudents} from '../../redux/actions/index';
+import { Button, ButtonGroup } from '@material-ui/core';
 
 const columns = [
   { id: 'firstName', label: 'First Name', minWidth: 170 },
@@ -21,6 +21,7 @@ const columns = [
   { id: 'fullBrgy', label: 'Brgy', minWidth: 100 },
   { id: 'municipality', label: 'Municipality', minWidth: 100 },
   { id: 'postalCode', label: 'Postal Code', minWidth: 100 },
+  {id: 'actions', label: 'Actions', minWidth: 100},
 ];
 
 const useStyles = makeStyles({
@@ -45,7 +46,7 @@ const DashBoard = () => {
 
   useEffect(() => {
     dispatch(getAllStudents());
-  }, []);
+  }, [dispatch]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -94,7 +95,14 @@ const DashBoard = () => {
                     const value = row[column.id];
                     return (
                       <TableCell key={`cell-${index}`} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                        {column.id === 'actions' ? 
+                        (
+                          <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
+                            <Button color="primary">Edit</Button>
+                            <Button color="secondary">Delete</Button>
+                          </ButtonGroup>
+                        ) 
+                        : value}
                       </TableCell>
                     );
                   })}
