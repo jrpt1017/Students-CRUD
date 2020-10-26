@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import {getAllStudents} from '../../redux/actions/index';
+import {getAllStudents, deleteStudent} from '../../redux/actions/studentAction';
 import { Button, ButtonGroup } from '@material-ui/core';
 
 const columns = [
@@ -63,13 +63,17 @@ const DashBoard = () => {
       const {firstName, middleName, lastName} = name;
       const {houseNumber, streetName, municipality, brgy, postalCode} = address;
       const {brgyNumber, zoneNumber} = brgy;
-      const fullAddress = `${houseNumber} ${streetName} Street`;
+      const fullAddress = `${houseNumber} ${streetName}`;
       const fullBrgy = `${brgyNumber} zone ${zoneNumber}`;
       return {
         firstName, middleName, lastName, age, fullAddress, fullBrgy, municipality, postalCode
       }
     });
   }
+
+  const handleOnChangeDelete = (event) => {
+    dispatch(deleteStudent('5f957de55090c406bde5f097'));
+  };
 
   return (
     <Paper className={classes.root}>
@@ -99,7 +103,7 @@ const DashBoard = () => {
                         (
                           <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
                             <Button color="primary">Edit</Button>
-                            <Button color="secondary">Delete</Button>
+                            <Button onClick={handleOnChangeDelete}color="secondary">Delete</Button>
                           </ButtonGroup>
                         ) 
                         : value}

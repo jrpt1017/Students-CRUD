@@ -12,3 +12,12 @@ export const getStudents = async () => {
     console.log(error.message)
   }
 };
+
+export const deleteStudentByID = async (id) => {
+  try {
+    const student = await axios.delete(`${requestString}/${id}`);
+    return student;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
