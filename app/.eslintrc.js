@@ -18,5 +18,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    "arrow-body-style": "off",
+    "quotes": ["error", "double"]
   },
 };
