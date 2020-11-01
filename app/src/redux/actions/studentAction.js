@@ -1,9 +1,16 @@
-import { getStudents, deleteStudentByID } from "../../services/studentsService";
+import { getStudents, deleteStudentByID, getSingleStudent } from "../../services/studentsService";
 
 const populateState = (students) => {
   return {
     type: "POPULATE_STATE",
     payload: students,
+  };
+};
+
+export const updateInfo = (student) => {
+  return {
+    type: "UPDATE_INFO",
+    payload: student,
   };
 };
 
@@ -18,10 +25,20 @@ export const getAllStudents = () => {
   };
 };
 
-export const deleteStudent = (id) => {
+export const dispatchDeleteStudent = (id) => {
   return async (dispatch) => {
     try {
       await deleteStudentByID(id);
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+  };
+};
+
+export const dispatchGetSingleStudent = (id) => {
+  return async (dispatch) => {
+    try {
+      await getSingleStudent(id);
     } catch (error) {
       console.log(`Error: ${error.message}`);
     }

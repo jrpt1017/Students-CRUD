@@ -19,6 +19,7 @@ module.exports = {
   ],
   rules: {
     "arrow-body-style": "off",
+    "max-len": "off",
     "quotes": ["error", "double"]
   },
 };

@@ -13,6 +13,15 @@ export const getStudents = async () => {
   }
 };
 
+export const getSingleStudent = async (id) => {
+  try {
+    const student = await axios.get(`${requestString}/${id}`);
+    return student.data;
+  } catch (error) {
+    console.log(error.message)
+  }
+};
+
 export const deleteStudentByID = async (id) => {
   try {
     const student = await axios.delete(`${requestString}/${id}`);

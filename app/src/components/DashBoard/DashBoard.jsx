@@ -1,15 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import { Button, ButtonGroup } from "@material-ui/core";
+import {
+  Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button, ButtonGroup,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { getAllStudents, deleteStudent } from "../../redux/actions/studentAction";
 
@@ -25,10 +19,10 @@ const columns = [
   { id: "actions", label: "Actions", minWidth: 100 },
 ];
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: 12,
+    marginTop: 100,
   },
   container: {
     maxHeight: 440,
@@ -36,7 +30,14 @@ const useStyles = makeStyles({
   tableHeader: {
     backgroundColor: "darkcyan",
   },
-});
+  wrapper: {
+    margin: theme.spacing(10, 30, 10, 30),
+    flexGrow: 1,
+  },
+  addStudent: {
+    margin: 12,
+  },
+}));
 
 const DashBoard = () => {
   const classes = useStyles();
@@ -60,24 +61,27 @@ const DashBoard = () => {
 
   const data = () => {
     return students && students.map((student) => {
-      const { name, address, age } = student;
+      const { name, address, age, _id } = student;
       const { firstName, middleName, lastName } = name;
       const { houseNumber, streetName, municipality, brgy, postalCode } = address;
       const { brgyNumber, zoneNumber } = brgy;
       const fullAddress = `${houseNumber} ${streetName}`;
       const fullBrgy = `${brgyNumber} zone ${zoneNumber}`;
       return {
-        firstName, middleName, lastName, age, fullAddress, fullBrgy, municipality, postalCode
-      }
+        _id, firstName, middleName, lastName, age, fullAddress, fullBrgy, municipality, postalCode,
+      };
     });
   };
 
-  const handleOnChangeDelete = (event) => {
-    dispatch(deleteStudent("5f957de55090c406bde5f097"));
+  const handleOnChangeDelete = (id) => {
+    dispatch(deleteStudent(id));
   };
 
   return (
     <Paper className={classes.root}>
+      <Link to="addStudent">
+        <Button color="primary" variant="contained" className={classes.addStudent}>Add Student</Button>
+      </Link>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -98,15 +102,16 @@ const DashBoard = () => {
                 <TableRow hover role="checkbox" tabIndex={-1} key={`row-${index}`}>
                   {columns.map((column, index) => {
                     const value = row[column.id];
+                    const { _id: id } = row;
                     return (
                       <TableCell key={`cell-${index}`} align={column.align}>
                         {column.id === "actions" ?
                           (
                             <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
-                              <Link to="/fillup">
-                                <Button color="primary">Edit</Button>
+                              <Link to={`/updateStudent/${id}`}>
+                                <Button color="primary">Update</Button>
                               </Link>
-                              <Button onClick={handleOnChangeDelete} color="secondary">Delete</Button>
+                              <Button onClick={() => { return handleOnChangeDelete(id); }} color="secondary">Delete</Button>
                             </ButtonGroup>
                           )
                           : value}
