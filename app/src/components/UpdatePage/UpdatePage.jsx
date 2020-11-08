@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography, Grid, Box, TextField, Button, ButtonGroup,
 } from "@material-ui/core";
 import { Link, useParams } from "react-router-dom";
-import { updateInfo } from "../../redux/actions/studentAction";
+import { updateInfo, dispatchGetSingleStudent, dispatchAddStudent, dispatchUpdateStudent } from "../../redux/actions/studentAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,20 +32,29 @@ const useStyles = makeStyles((theme) => ({
 const UpdatePage = () => {
   const classes = useStyles();
   const [isUpdate, setIsUpdate] = useState();
+  const student = useSelector(state => state.studentInfo)
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     if (id === undefined) {
       setIsUpdate(false);
     } else {
+      dispatch(dispatchGetSingleStudent(id));
       setIsUpdate(true);
     }
   }, [id]);
 
-  const onSubmit = (data) => {
-    dispatch(updateInfo(data));
+  const handleOnSubmit = (data) => {
+    if(isUpdate){
+      dispatch(dispatchUpdateStudent(id, student));
+    } else {
+      dispatch(dispatchAddStudent(student))
+    }
+  };
+
+  const handleChange = (event, parent = undefined) => {
+    dispatch(updateInfo(event.target.name, event.target.value, parent));
   };
 
   return (
@@ -59,28 +68,32 @@ const UpdatePage = () => {
         </Grid>
         <Grid container justify="space-around">
           <TextField
-            inputRef={register}
+            onChange={(e) => {return handleChange(e, 'name');}}
+            value={student.name.firstName}
             name="firstName"
             label="First Name"
             variant="outlined"
             className={classes.inputField}
           />
           <TextField
-            inputRef={register}
+            onChange={(e) => {return handleChange(e, 'name');}}
+            value={student.name.middleName}
             name="middleName"
             label="Middle Name"
             variant="outlined"
             className={classes.inputField}
           />
           <TextField
-            inputRef={register}
+            onChange={(e) => {return handleChange(e, 'name');}}
+            value={student.name.lastName}
             name="lastName"
             label="Last Name"
             variant="outlined"
             className={classes.inputField}
           />
           <TextField
-            inputRef={register}
+            onChange={(e) => {return handleChange(e);}}
+            value={student.age}
             name="age"
             label="Age"
             type="Number"
@@ -94,7 +107,8 @@ const UpdatePage = () => {
         <Grid container spacing={3} direction="row" justify="space-evenly">
           <Grid item xs>
             <TextField
-              inputRef={register}
+              onChange={(e) => {return handleChange(e, 'address');}}
+              value={student.address.houseNumber}
               name="houseNumber"
               label="House Number"
               type="Number"
@@ -104,7 +118,8 @@ const UpdatePage = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              inputRef={register}
+              onChange={(e) => {return handleChange(e, 'address');}}
+              value={student.address.streetName}
               name="streetName"
               label="Street Name"
               variant="outlined"
@@ -113,7 +128,8 @@ const UpdatePage = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              inputRef={register}
+              onChange={(e) => {return handleChange(e, 'address');}}
+              value={student.address.municipality}
               name="municipality"
               label="Municipality"
               variant="outlined"
@@ -124,7 +140,8 @@ const UpdatePage = () => {
         <Grid container spacing={3} direction="row" justify="space-around">
           <Grid item xs>
             <TextField
-              inputRef={register}
+              onChange={(e) => {return handleChange(e, 'brgy');}}
+              value={student.address.brgy.brgyNumber}
               name="brgyNumber"
               label="Brgy. #"
               type="Number"
@@ -134,7 +151,8 @@ const UpdatePage = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              inputRef={register}
+              onChange={(e) => {return handleChange(e, 'brgy');}}
+              value={student.address.brgy.zoneNumber}
               name="zoneNumber"
               label="Zone #"
               type="Number"
@@ -144,7 +162,8 @@ const UpdatePage = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              inputRef={register}
+              onChange={(e) => {return handleChange(e, 'address');}}
+              value={student.address.postalCode}
               name="postalCode"
               label="Postal Code"
               variant="outlined"
@@ -154,7 +173,7 @@ const UpdatePage = () => {
         </Grid>
         <ButtonGroup disableElevation variant="contained" fullWidth size="large">
           <Button color="secondary">Clear fields</Button>
-          <Button color="primary" onClick={handleSubmit(onSubmit)}>{isUpdate ? "Update Student" : "Add Student"}</Button>
+          <Button color="primary" onClick={handleOnSubmit}>{isUpdate ? "Update Student" : "Add Student"}</Button>
         </ButtonGroup>
       </Box>
     </>

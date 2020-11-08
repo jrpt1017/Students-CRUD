@@ -30,3 +30,27 @@ export const deleteStudentByID = async (id) => {
     console.log(error.message);
   }
 };
+
+export const addStudent = async (student) => {
+  try {
+    const data = await axios({
+      method: "post",
+      url: requestString,
+      data: student,
+    });
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const updateStudentByID = async (id, studentData) => {
+  try {
+  delete studentData._id
+  console.log(JSON.stringify(studentData))
+    const data = await axios.put(`${requestString}/${id}`, studentData);
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};

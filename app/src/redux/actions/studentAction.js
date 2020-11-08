@@ -1,4 +1,4 @@
-import { getStudents, deleteStudentByID, getSingleStudent } from "../../services/studentsService";
+import { getStudents, deleteStudentByID, getSingleStudent, addStudent, updateStudentByID } from "../../services/studentsService";
 
 const populateState = (students) => {
   return {
@@ -7,10 +7,11 @@ const populateState = (students) => {
   };
 };
 
-export const updateInfo = (student) => {
+export const updateInfo = (name, value, parent) => {
   return {
     type: "UPDATE_INFO",
-    payload: student,
+    payload: {name, value},
+    parent,
   };
 };
 
@@ -28,9 +29,36 @@ export const getAllStudents = () => {
 export const dispatchDeleteStudent = (id) => {
   return async (dispatch) => {
     try {
-      await deleteStudentByID(id);
+      const data = await deleteStudentByID(id);
+      console.log(data)
     } catch (error) {
       console.log(`Error: ${error.message}`);
+    }
+  };
+};
+
+export const dispatchAddStudent = (student) => {
+  return async (dispatch) => {
+    try {
+      const { status } = await addStudent(student);
+      if (status === 201) {
+        dispatch(updateInfo(student));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const dispatchUpdateStudent = (id, studentData) => {
+  return async (dispatch) => {
+    try {
+      const { status } = await updateStudentByID(id, studentData);
+      if (status === 201) {
+        dispatch(updateInfo(studentData));
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 };
@@ -38,7 +66,23 @@ export const dispatchDeleteStudent = (id) => {
 export const dispatchGetSingleStudent = (id) => {
   return async (dispatch) => {
     try {
-      await getSingleStudent(id);
+      const student = await getSingleStudent(id);
+      console.log(student)
+      const studentObject = {};
+      studentObject.firstName = student.name.firstName;
+      studentObject.middleName = student.name.middleName;
+      studentObject.lastName = student.name.lastName;
+      studentObject.age = student.age
+      studentObject.houseNumber = student.address.houseNumber;
+      studentObject.streetName = student.address.streetName;
+      studentObject.municipality = student.address.municipality;
+      studentObject.brgyNumber = student.address.brgy.brgyNumber;
+      studentObject.zoneNumber = student.address.brgy.zoneNumber;
+      studentObject.postalCode = student.address.postalCode;
+      dispatch({
+        type: "GET_STUDENT",
+        payload: student,
+      })
     } catch (error) {
       console.log(`Error: ${error.message}`);
     }

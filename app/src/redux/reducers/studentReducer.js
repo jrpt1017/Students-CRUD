@@ -1,6 +1,26 @@
+import {remove} from 'lodash';
+
 const initStore = {
   students: [],
-  studentInfo: {},
+  studentInfo: {
+    id: '',
+    name: {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+    },
+    age: '',
+    address: {
+      houseNumber: '',
+      streetName: '',
+      municipality: '',
+      brgy: {
+        brgyNumber: '',
+        zoneNumber: ''
+      },
+      postalCode: '',
+    }
+  },
 };
 
 const studentsReducer = (state = initStore, action) => {
@@ -16,10 +36,49 @@ const studentsReducer = (state = initStore, action) => {
         students: action.payload,
       };
     case "UPDATE_INFO":
+      if (action.parent) {
+        if(action.parent === 'brgy') {
+          return {
+            ...state,
+            studentInfo: {
+              ...state.studentInfo,
+              address: {
+                ...state.studentInfo.address,
+                brgy: {
+                  ...state.studentInfo.address.brgy,
+                [action.payload.name]: action.payload.value,
+                }
+              }
+            }
+          }
+        }
+        return {
+          ...state,
+          studentInfo: {
+            ...state.studentInfo,
+            [action.parent]: {
+              ...state.studentInfo.[action.parent],
+              [action.payload.name]: action.payload.value,
+            }
+          }
+        }
+      }
       return {
         ...state,
-        studentInfo: action.payload,
+        studentInfo: {
+          ...state.studentInfo,
+          [action.payload.name]: action.payload.value,
+        }
       };
+    case "GET_STUDENT":
+      return {
+        ...state,
+        studentInfo: action.payload
+      }
+    case "RELOAD_STATE": 
+      return {
+        ...state,
+      }
     default: return state;
   }
 };

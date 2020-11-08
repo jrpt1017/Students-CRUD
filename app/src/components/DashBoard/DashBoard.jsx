@@ -5,7 +5,7 @@ import {
   Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button, ButtonGroup,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { getAllStudents, deleteStudent } from "../../redux/actions/studentAction";
+import { getAllStudents, dispatchDeleteStudent } from "../../redux/actions/studentAction";
 
 const columns = [
   { id: "firstName", label: "First Name", minWidth: 170 },
@@ -74,7 +74,7 @@ const DashBoard = () => {
   };
 
   const handleOnChangeDelete = (id) => {
-    dispatch(deleteStudent(id));
+    dispatch(dispatchDeleteStudent(id));
   };
 
   return (
