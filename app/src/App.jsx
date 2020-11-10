@@ -3,11 +3,13 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import UpdatePage from "./components/UpdatePage/UpdatePage";
 import MainHeader from "./components/MainHeader/MainHeader";
 import DashBoard from "./components/DashBoard/DashBoard";
+import Modal from "./components/Modal/Modal";
 
 const App = () => {
   return (
     <>
       <MainHeader />
+      <Modal/>
       <Switch>
         <Route exact path="/"
           render={() => {

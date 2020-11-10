@@ -1,6 +1,12 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import studentsReducer from "../reducers/studentReducer";
+import modalReducer from "../reducers/modalReducer";
 
-export const store = createStore(studentsReducer, composeWithDevTools(applyMiddleware(thunkMiddleware)));
+const rootReducer = combineReducers({
+    studentState: studentsReducer,
+    modalState: modalReducer,
+})
+
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware)));

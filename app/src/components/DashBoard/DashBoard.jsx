@@ -47,7 +47,7 @@ const DashBoard = () => {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const students = useSelector((state) => state.students);
+  const students = useSelector((state) => state.studentState.students);
 
   useEffect(() => {
     dispatch(getAllStudents());

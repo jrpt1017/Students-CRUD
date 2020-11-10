@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Typography, Grid, Box, TextField, Button, ButtonGroup,
 } from "@material-ui/core";
 import { Link, useParams } from "react-router-dom";
+import Modal from '../Modal/Modal';
 import { updateInfo, dispatchGetSingleStudent, dispatchAddStudent, dispatchUpdateStudent } from "../../redux/actions/studentAction";
+import {toggleModal} from "../../redux/actions/modalAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const UpdatePage = () => {
   const classes = useStyles();
   const [isUpdate, setIsUpdate] = useState();
-  const student = useSelector(state => state.studentInfo)
+  const student = useSelector(state => state.studentState.studentInfo)
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -46,16 +47,20 @@ const UpdatePage = () => {
   }, [id]);
 
   const handleOnSubmit = (data) => {
-    if(isUpdate){
-      dispatch(dispatchUpdateStudent(id, student));
-    } else {
-      dispatch(dispatchAddStudent(student))
-    }
+    dispatch(toggleModal(true));
+    // if(isUpdate){
+    //   dispatch(dispatchUpdateStudent(id, student));
+    // } else {
+    //   dispatch(dispatchAddStudent(student))
+    // }
   };
 
   const handleChange = (event, parent = undefined) => {
     dispatch(updateInfo(event.target.name, event.target.value, parent));
   };
+
+  // const handleOnSubmit = () => {
+  // };
 
   return (
     <>
