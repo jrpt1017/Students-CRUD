@@ -22,9 +22,21 @@ const Modal = () =>  {
   const classes = useStyles();
   const dispatch = useDispatch();
   const isModalOpen = useSelector(state => state.modalState.isModalOpen);
+  const modalType = useSelector(state => state.modalState.modalType);
 
   const handleClose = () => {
     dispatch(toggleModal(false));
+  };
+
+  const getModalTitle = () => {
+    switch(modalType) {
+      case 'add':
+        return 'Add Student?';
+      case 'update':
+        return 'Update Student?';
+      case 'delete':
+        return 'Delet Student?';
+    };
   };
 
   return (
@@ -43,7 +55,7 @@ const Modal = () =>  {
       >
         <Fade in={isModalOpen}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Transition modal</h2>
+            <h2 id="transition-modal-title">{getModalTitle()}</h2>
             <p id="transition-modal-description">react-transition-group animates me.</p>
           </div>
         </Fade>

@@ -7,7 +7,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import Modal from '../Modal/Modal';
 import { updateInfo, dispatchGetSingleStudent, dispatchAddStudent, dispatchUpdateStudent } from "../../redux/actions/studentAction";
-import {toggleModal} from "../../redux/actions/modalAction";
+import {setModalType, toggleModal} from "../../redux/actions/modalAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +48,7 @@ const UpdatePage = () => {
 
   const handleOnSubmit = (data) => {
     dispatch(toggleModal(true));
+    {isUpdate ? dispatch(setModalType('update')) : dispatch(setModalType('add')) }
     // if(isUpdate){
     //   dispatch(dispatchUpdateStudent(id, student));
     // } else {

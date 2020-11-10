@@ -1,6 +1,7 @@
 
 const initState = {
   isModalOpen: false,
+  modalType: '',
 }
 
 const modalReducer = (state = initState, action) => {
@@ -9,6 +10,11 @@ const modalReducer = (state = initState, action) => {
       return {
         ...state,
         isModalOpen: action.payload
+      }
+    case "SET_MODAL_TYPE":
+      return {
+        ...state,
+        modalType: action.payload,
       }
     default: return state;
   }

@@ -4,3 +4,10 @@ export const toggleModal = (value) => {
     payload: value,
   }
 };
+
+export const setModalType = (type) => {
+  return {
+    type: "SET_MODAL_TYPE",
+    payload: type,
+  }
+};
