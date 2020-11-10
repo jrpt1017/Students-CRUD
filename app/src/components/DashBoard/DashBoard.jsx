@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   addStudent: {
     margin: 12,
   },
+  link: {
+    textDecoration: 'none',
+  }
 }));
 
 const DashBoard = () => {
@@ -75,11 +78,12 @@ const DashBoard = () => {
 
   const handleOnChangeDelete = (id) => {
     dispatch(dispatchDeleteStudent(id));
+    dispatch(getAllStudents());
   };
 
   return (
     <Paper className={classes.root}>
-      <Link to="addStudent">
+      <Link to="addStudent" className={classes.link}>
         <Button color="primary" variant="contained" className={classes.addStudent}>Add Student</Button>
       </Link>
       <TableContainer className={classes.container}>
@@ -108,7 +112,7 @@ const DashBoard = () => {
                         {column.id === "actions" ?
                           (
                             <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
-                              <Link to={`/updateStudent/${id}`}>
+                              <Link to={`/updateStudent/${id}`} className={classes.link}>
                                 <Button color="primary">Update</Button>
                               </Link>
                               <Button onClick={() => { return handleOnChangeDelete(id); }} color="secondary">Delete</Button>
