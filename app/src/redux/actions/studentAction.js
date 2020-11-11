@@ -57,6 +57,7 @@ export const dispatchUpdateStudent = (id, studentData) => {
       if (status === 201) {
         dispatch(updateInfo(studentData));
       }
+      return status;
     } catch (error) {
       console.log(error.message);
     }

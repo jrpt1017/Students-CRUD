@@ -5,8 +5,7 @@ import {
   Typography, Grid, Box, TextField, Button, ButtonGroup,
 } from "@material-ui/core";
 import { Link, useParams } from "react-router-dom";
-import Modal from '../Modal/Modal';
-import { updateInfo, dispatchGetSingleStudent, dispatchAddStudent, dispatchUpdateStudent } from "../../redux/actions/studentAction";
+import { updateInfo, dispatchGetSingleStudent } from "../../redux/actions/studentAction";
 import {setModalType, toggleModal} from "../../redux/actions/modalAction";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,19 +48,11 @@ const UpdatePage = () => {
   const handleOnSubmit = (data) => {
     dispatch(toggleModal(true));
     {isUpdate ? dispatch(setModalType('update')) : dispatch(setModalType('add')) }
-    // if(isUpdate){
-    //   dispatch(dispatchUpdateStudent(id, student));
-    // } else {
-    //   dispatch(dispatchAddStudent(student))
-    // }
   };
 
   const handleChange = (event, parent = undefined) => {
     dispatch(updateInfo(event.target.name, event.target.value, parent));
   };
-
-  // const handleOnSubmit = () => {
-  // };
 
   return (
     <>
