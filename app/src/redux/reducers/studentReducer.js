@@ -1,26 +1,28 @@
 import {remove} from 'lodash';
 
+const studentInfo = {
+  id: '',
+  name: {
+    firstName: '',
+    middleName: '',
+    lastName: '',
+  },
+  age: '',
+  address: {
+    houseNumber: '',
+    streetName: '',
+    municipality: '',
+    brgy: {
+      brgyNumber: '',
+      zoneNumber: ''
+    },
+    postalCode: '',
+  }
+};
+
 const initStore = {
   students: [],
-  studentInfo: {
-    id: '',
-    name: {
-      firstName: '',
-      middleName: '',
-      lastName: '',
-    },
-    age: '',
-    address: {
-      houseNumber: '',
-      streetName: '',
-      municipality: '',
-      brgy: {
-        brgyNumber: '',
-        zoneNumber: ''
-      },
-      postalCode: '',
-    }
-  },
+  studentInfo,
 };
 
 const studentsReducer = (state = initStore, action) => {
@@ -30,6 +32,11 @@ const studentsReducer = (state = initStore, action) => {
         ...state,
         students: action.payload,
       };
+    case "RESET_STUDENT":
+      return {
+        ...state,
+        studentInfo,
+      }
     case "POPULATE_STATE":
       return {
         ...state,
@@ -74,10 +81,6 @@ const studentsReducer = (state = initStore, action) => {
       return {
         ...state,
         studentInfo: action.payload
-      }
-    case "RELOAD_STATE": 
-      return {
-        ...state,
       }
     default: return state;
   }

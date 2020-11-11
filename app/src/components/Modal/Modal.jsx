@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {Fade, Backdrop, Modal as MuiModal, Typography, Button, Paper, Grid} from '@material-ui/core';
 import { toggleModal } from '../../redux/actions/modalAction';
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const Modal = () =>  {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const isModalOpen = useSelector(state => state.modalState.isModalOpen);
   const modalType = useSelector(state => state.modalState.modalType);
   const student = useSelector(state => state.studentState.studentInfo)
@@ -51,10 +52,16 @@ const Modal = () =>  {
   };
 
   const handleProceed = async () => {
+    let isOperationSuccess = false;
     if(modalType === 'add'){
-      dispatch(dispatchAddStudent(student))
+      isOperationSuccess = await dispatch(dispatchAddStudent(student))
     } else if(modalType === 'update') {
-      dispatch(dispatchUpdateStudent(id, student));
+      isOperationSuccess = await dispatch(dispatchUpdateStudent(id, student));
+    }
+console.log(isOperationSuccess);
+    if(isOperationSuccess){
+      dispatch(toggleModal(false));
+      history.push('/dashboard')
     }
   };
 

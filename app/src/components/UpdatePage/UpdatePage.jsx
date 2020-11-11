@@ -5,7 +5,7 @@ import {
   Typography, Grid, Box, TextField, Button, ButtonGroup,
 } from "@material-ui/core";
 import { Link, useParams } from "react-router-dom";
-import { updateInfo, dispatchGetSingleStudent } from "../../redux/actions/studentAction";
+import { updateInfo, dispatchGetSingleStudent, clearStudentState } from "../../redux/actions/studentAction";
 import {setModalType, toggleModal} from "../../redux/actions/modalAction";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +37,7 @@ const UpdatePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(clearStudentState());
     if (id === undefined) {
       setIsUpdate(false);
     } else {
@@ -45,7 +46,7 @@ const UpdatePage = () => {
     }
   }, [id]);
 
-  const handleOnSubmit = (data) => {
+  const handleOnSubmit = () => {
     dispatch(toggleModal(true));
     {isUpdate ? dispatch(setModalType('update')) : dispatch(setModalType('add')) }
   };

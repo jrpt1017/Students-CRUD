@@ -1,4 +1,5 @@
 import { getStudents, deleteStudentByID, getSingleStudent, addStudent, updateStudentByID } from "../../services/studentsService";
+import {history} from "../../index";
 
 const populateState = (students) => {
   return {
@@ -13,6 +14,12 @@ export const updateInfo = (name, value, parent) => {
     payload: {name, value},
     parent,
   };
+};
+
+export const clearStudentState = () => {
+  return {
+    type: "RESET_STUDENT",
+  }
 };
 
 export const getAllStudents = () => {
@@ -44,6 +51,7 @@ export const dispatchAddStudent = (student) => {
       if (status === 201) {
         dispatch(updateInfo(student));
       }
+      return (status === 201);
     } catch (error) {
       console.log(error.message);
     }
@@ -57,7 +65,7 @@ export const dispatchUpdateStudent = (id, studentData) => {
       if (status === 201) {
         dispatch(updateInfo(studentData));
       }
-      return status;
+      return (status === 201);
     } catch (error) {
       console.log(error.message);
     }
