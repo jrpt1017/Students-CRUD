@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { getAllStudents, dispatchDeleteStudent } from "../../redux/actions/studentAction";
+import { toggleModal, setModalType, setModalID } from "../../redux/actions/modalAction";
 
 const columns = [
   { id: "firstName", label: "First Name", minWidth: 170 },
@@ -77,8 +78,9 @@ const DashBoard = () => {
   };
 
   const handleOnChangeDelete = (id) => {
-    dispatch(dispatchDeleteStudent(id));
-    dispatch(getAllStudents());
+    dispatch(toggleModal(true));
+    dispatch(setModalType('delete'));
+    dispatch(setModalID(id));
   };
 
   return (

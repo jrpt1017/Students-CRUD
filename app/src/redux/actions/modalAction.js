@@ -11,3 +11,10 @@ export const setModalType = (type) => {
     payload: type,
   }
 };
+
+export const setModalID = (id) => {
+  return {
+    type: "SET_MODAL_ID",
+    payload: id,
+  }
+};

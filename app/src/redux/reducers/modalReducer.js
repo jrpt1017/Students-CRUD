@@ -2,6 +2,7 @@
 const initState = {
   isModalOpen: false,
   modalType: '',
+  id: '',
 }
 
 const modalReducer = (state = initState, action) => {
@@ -15,6 +16,11 @@ const modalReducer = (state = initState, action) => {
       return {
         ...state,
         modalType: action.payload,
+      }
+    case "SET_MODAL_ID":
+      return {
+        ...state,
+        id: action.payload,
       }
     default: return state;
   }

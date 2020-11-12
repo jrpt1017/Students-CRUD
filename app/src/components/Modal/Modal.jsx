@@ -4,7 +4,7 @@ import {useParams, useHistory} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {Fade, Backdrop, Modal as MuiModal, Typography, Button, Paper, Grid} from '@material-ui/core';
 import { toggleModal } from '../../redux/actions/modalAction';
-import { dispatchAddStudent, dispatchUpdateStudent } from '../../redux/actions/studentAction';
+import { dispatchAddStudent, dispatchUpdateStudent, dispatchDeleteStudent, getAllStudents } from '../../redux/actions/studentAction';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -28,7 +28,7 @@ const Modal = () =>  {
   const dispatch = useDispatch();
   const history = useHistory();
   const isModalOpen = useSelector(state => state.modalState.isModalOpen);
-  const modalType = useSelector(state => state.modalState.modalType);
+  const modal = useSelector(state => state.modalState);
   const student = useSelector(state => state.studentState.studentInfo)
   const id = student._id;
 
@@ -37,7 +37,7 @@ const Modal = () =>  {
   };
 
   const getModalTitle = () => {
-    switch(modalType) {
+    switch(modal.modalType) {
       case 'add':
         return 'Add Student?';
       case 'update':
@@ -53,15 +53,17 @@ const Modal = () =>  {
 
   const handleProceed = async () => {
     let isOperationSuccess = false;
-    if(modalType === 'add'){
+    if(modal.modalType === 'add'){
       isOperationSuccess = await dispatch(dispatchAddStudent(student))
-    } else if(modalType === 'update') {
+    } else if(modal.modalType === 'update') {
       isOperationSuccess = await dispatch(dispatchUpdateStudent(id, student));
+    } else {
+      isOperationSuccess = await dispatch(dispatchDeleteStudent(modal.id));
     }
-console.log(isOperationSuccess);
     if(isOperationSuccess){
       dispatch(toggleModal(false));
-      history.push('/dashboard')
+      dispatch(getAllStudents());
+      history.push('/dashboard');
     }
   };
 

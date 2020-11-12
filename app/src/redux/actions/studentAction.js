@@ -36,8 +36,8 @@ export const getAllStudents = () => {
 export const dispatchDeleteStudent = (id) => {
   return async (dispatch) => {
     try {
-      const data = await deleteStudentByID(id);
-      console.log(data)
+      const {status} = await deleteStudentByID(id);
+      return (status === 201);
     } catch (error) {
       console.log(`Error: ${error.message}`);
     }
