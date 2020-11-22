@@ -15,9 +15,9 @@ const Notification = () => {
       case 'update':
         return 'Updated Student Successfully!';
       case 'delete':
-        return 'Deleted Student Successfully';
+        return 'Deleted Student Successfully!';
       case 'deleteAll':
-        return 'Deleted All Students SuccessFully';
+        return 'Deleted All Students Successully!';
       default: return '';
     }
   }
