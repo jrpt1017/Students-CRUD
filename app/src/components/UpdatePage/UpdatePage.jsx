@@ -55,6 +55,10 @@ const UpdatePage = () => {
     dispatch(updateInfo(event.target.name, event.target.value, parent));
   };
 
+  const handleClearFields = () => {
+    dispatch(clearStudentState());
+  };
+
   return (
     <>
       <Box className={classes.root}>
@@ -72,6 +76,7 @@ const UpdatePage = () => {
             label="First Name"
             variant="outlined"
             className={classes.inputField}
+            required
           />
           <TextField
             onChange={(e) => { return handleChange(e, 'name'); }}
@@ -158,7 +163,7 @@ const UpdatePage = () => {
           </Grid>
         </Grid>
         <ButtonGroup disableElevation variant="contained" fullWidth size="large">
-          <Button color="secondary">Clear fields</Button>
+          <Button color="secondary" onClick={handleClearFields}>Clear fields</Button>
           <Button color="primary" onClick={handleOnSubmit}>{isUpdate ? "Update Student" : "Add Student"}</Button>
         </ButtonGroup>
       </Box>
