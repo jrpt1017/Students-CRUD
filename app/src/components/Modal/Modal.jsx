@@ -1,8 +1,8 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {useParams, useHistory} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import {Fade, Backdrop, Modal as MuiModal, Typography, Button, Paper, Grid} from '@material-ui/core';
+import { Fade, Backdrop, Modal as MuiModal, Typography, Button, Paper, Grid } from '@material-ui/core';
 import { toggleModal } from '../../redux/actions/modalAction';
 import { dispatchAddStudent, dispatchUpdateStudent, dispatchDeleteStudent, getAllStudents } from '../../redux/actions/studentAction';
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Modal = () =>  {
+const Modal = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -37,7 +37,7 @@ const Modal = () =>  {
   };
 
   const getModalTitle = () => {
-    switch(modal.modalType) {
+    switch (modal.modalType) {
       case 'add':
         return 'Add Student?';
       case 'update':
@@ -53,14 +53,14 @@ const Modal = () =>  {
 
   const handleProceed = async () => {
     let isOperationSuccess = false;
-    if(modal.modalType === 'add'){
+    if (modal.modalType === 'add') {
       isOperationSuccess = await dispatch(dispatchAddStudent(student))
-    } else if(modal.modalType === 'update') {
+    } else if (modal.modalType === 'update') {
       isOperationSuccess = await dispatch(dispatchUpdateStudent(id, student));
     } else {
       isOperationSuccess = await dispatch(dispatchDeleteStudent(modal.id));
     }
-    if(isOperationSuccess){
+    if (isOperationSuccess) {
       dispatch(toggleModal(false));
       dispatch(getAllStudents());
       history.push('/dashboard');
@@ -83,15 +83,15 @@ const Modal = () =>  {
       >
         <Fade in={isModalOpen}>
           <Paper className={classes.paper}>
-          <Typography>{getModalTitle()}</Typography>
-          <Grid container spacing={2}>
-            <Grid item>
-              <Button color="secondary" variant="outlined" disableElevation size="large" onClick={handleDiscard}>Discard</Button>
+            <Typography>{getModalTitle()}</Typography>
+            <Grid container spacing={2}>
+              <Grid item>
+                <Button color="secondary" variant="outlined" disableElevation size="large" onClick={handleDiscard}>Discard</Button>
+              </Grid>
+              <Grid item>
+                <Button color="primary" variant="contained" disableElevation size="large" onClick={handleProceed}>Proceed</Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button color="primary" variant="contained" disableElevation size="large" onClick={handleProceed}>Proceed</Button>
-            </Grid>
-          </Grid>
           </Paper>
         </Fade>
       </MuiModal>

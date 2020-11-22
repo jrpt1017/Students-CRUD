@@ -4,7 +4,7 @@ const studentsRouter = require('./api/studentsRouter');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
-const port = process.env.port || 3000;
+const port = process.env.port || 5000;
 
 const app = express();
 app.use(bodyParser.json());

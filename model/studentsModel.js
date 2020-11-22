@@ -20,19 +20,6 @@ const nameSchema = mongoose.Schema({
     _id: false
 });
 
-const brgySchema = mongoose.Schema({
-    brgyNumber: {
-        type: String,
-        required: true,
-    },
-    zoneNumber: {
-        type: String,
-        required: true,
-    },
-}, {
-    _id: false
-})
-
 const addressSchema = mongoose.Schema({
     houseNumber: {
         type: Number,
@@ -46,7 +33,10 @@ const addressSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    brgy: brgySchema,
+    brgyName: {
+        type: String,
+        required: true,
+    },
     postalCode: {
         type: Number,
         required: true,

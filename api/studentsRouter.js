@@ -34,12 +34,9 @@ router.post('/', async (req, res) => {
         houseNumber,
         streetName,
         municipality,
-        postalCode
+        postalCode,
+        brgyName
     } = req.body.address;
-    const {
-        brgyNumber,
-        zoneNumber
-    } = req.body.address.brgy;
     const data = new Student({
         name: {
             firstName,
@@ -51,10 +48,7 @@ router.post('/', async (req, res) => {
             houseNumber,
             streetName,
             municipality,
-            brgy: {
-                brgyNumber,
-                zoneNumber
-            },
+            brgyName,
             postalCode,
         }
     });
@@ -107,12 +101,9 @@ router.put('/:id', async (req, res) => {
         houseNumber,
         streetName,
         municipality,
-        postalCode
+        postalCode,
+        brgyName
     } = req.body.address;
-    const {
-        brgyNumber,
-        zoneNumber
-    } = req.body.address.brgy;
     try {
         const student = await Student.findById(req.params.id);
 
@@ -139,8 +130,8 @@ router.put('/:id', async (req, res) => {
             student.address.postalCode = postalCode;
         }
 
-        if (brgyNumber) {
-            student.address.brgyNumber = brgyNumber;
+        if (brgyName) {
+            student.address.brgyName = brgyName;
         }
         if (zoneNumber) {
             student.address.zoneNumber = zoneNumber;

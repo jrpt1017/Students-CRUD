@@ -74,7 +74,7 @@ const DashBoard = () => {
       return {
         _id, firstName, middleName, lastName, age, fullAddress, fullBrgy, municipality, postalCode,
       };
-    });
+    }) || [];
   };
 
   const handleOnChangeDelete = (id) => {
