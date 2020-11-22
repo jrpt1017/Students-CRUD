@@ -55,7 +55,6 @@ export const addStudent = async (student) => {
 
 export const updateStudentByID = async (id, studentData) => {
   try {
-    console.log(studentData)
     const data = await axios.put(`${requestString}/${id}`, studentData);
     return data;
   } catch (error) {

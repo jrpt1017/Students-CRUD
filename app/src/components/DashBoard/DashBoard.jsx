@@ -87,69 +87,71 @@ const DashBoard = () => {
   };
 
   return (
-    <Paper className={classes.root}>
-      <Link to="addStudent" className={classes.link}>
-        <Button color="primary" variant="contained" className={classes.controlButtons}>Add Student</Button>
-      </Link>
-      <Button
-        color="secondary"
-        variant="outlined"
-        onClick={handleDeleteAllRecords}
-        className={classes.controlButtons}
-        disabled={data().length === 0}
-      >Delete All Records</Button>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data() && data().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={`row-${index}`}>
-                  {columns.map((column, index) => {
-                    const value = row[column.id];
-                    const { _id: id } = row;
-                    return (
-                      <TableCell key={`cell-${index}`} align={column.align}>
-                        {column.id === "actions" ?
-                          (
-                            <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
-                              <Link to={`/updateStudent/${id}`} className={classes.link}>
-                                <Button color="primary">Update</Button>
-                              </Link>
-                              <Button onClick={() => { return handleOnChangeDelete(id); }} color="secondary">Delete</Button>
-                            </ButtonGroup>
-                          )
-                          : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={data().length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <>
+      <Paper className={classes.root}>
+        <Link to="addStudent" className={classes.link}>
+          <Button color="primary" variant="contained" className={classes.controlButtons}>Add Student</Button>
+        </Link>
+        <Button
+          color="secondary"
+          variant="outlined"
+          onClick={handleDeleteAllRecords}
+          className={classes.controlButtons}
+          disabled={data().length === 0}
+        >Delete All Records</Button>
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data() && data().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={`row-${index}`}>
+                    {columns.map((column, index) => {
+                      const value = row[column.id];
+                      const { _id: id } = row;
+                      return (
+                        <TableCell key={`cell-${index}`} align={column.align}>
+                          {column.id === "actions" ?
+                            (
+                              <ButtonGroup variant="contained" color="primary" aria-label="outlined primary button group">
+                                <Link to={`/updateStudent/${id}`} className={classes.link}>
+                                  <Button color="primary">Update</Button>
+                                </Link>
+                                <Button onClick={() => { return handleOnChangeDelete(id); }} color="secondary">Delete</Button>
+                              </ButtonGroup>
+                            )
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={data().length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </>
   );
 };
 

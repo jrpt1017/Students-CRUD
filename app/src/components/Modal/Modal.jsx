@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Fade, Backdrop, Modal as MuiModal, Typography, Button, Paper, Grid } from '@material-ui/core';
 import { toggleModal } from '../../redux/actions/modalAction';
+import { setNotification } from '../../redux/actions/notificationAction';
 import { dispatchAddStudent, dispatchUpdateStudent, dispatchDeleteStudent, getAllStudents, dispatchDeleteAllStudents } from '../../redux/actions/studentAction';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,10 +66,13 @@ const Modal = () => {
       isOperationSuccess = await dispatch(dispatchDeleteAllStudents());
     }
     if (isOperationSuccess) {
+      dispatch(setNotification(true, true, modal.modalType));
       dispatch(toggleModal(false));
       dispatch(getAllStudents());
       history.push('/dashboard');
+      return;
     }
+    dispatch(setNotification(true, false, modal.modalType));
   };
 
   return (
