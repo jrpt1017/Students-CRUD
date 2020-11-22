@@ -14,7 +14,7 @@ const columns = [
   { id: "lastName", label: "Last Name", minWidth: 100 },
   { id: "age", label: "Age", minWidth: 100 },
   { id: "fullAddress", label: "House Address", minWidth: 100 },
-  { id: "fullBrgy", label: "Brgy", minWidth: 100 },
+  { id: "brgyName", label: "Brgy", minWidth: 100 },
   { id: "municipality", label: "Municipality", minWidth: 100 },
   { id: "postalCode", label: "Postal Code", minWidth: 100 },
   { id: "actions", label: "Actions", minWidth: 100 },
@@ -67,12 +67,10 @@ const DashBoard = () => {
     return students && students.map((student) => {
       const { name, address, age, _id } = student;
       const { firstName, middleName, lastName } = name;
-      const { houseNumber, streetName, municipality, brgy, postalCode } = address;
-      const { brgyNumber, zoneNumber } = brgy;
+      const { houseNumber, streetName, municipality, brgyName, postalCode } = address;
       const fullAddress = `${houseNumber} ${streetName}`;
-      const fullBrgy = `${brgyNumber} zone ${zoneNumber}`;
       return {
-        _id, firstName, middleName, lastName, age, fullAddress, fullBrgy, municipality, postalCode,
+        _id, firstName, middleName, lastName, age, fullAddress, brgyName, municipality, postalCode,
       };
     }) || [];
   };

@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import { Link, useParams } from "react-router-dom";
 import { updateInfo, dispatchGetSingleStudent, clearStudentState } from "../../redux/actions/studentAction";
-import {setModalType, toggleModal} from "../../redux/actions/modalAction";
+import { setModalType, toggleModal } from "../../redux/actions/modalAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +48,7 @@ const UpdatePage = () => {
 
   const handleOnSubmit = () => {
     dispatch(toggleModal(true));
-    {isUpdate ? dispatch(setModalType('update')) : dispatch(setModalType('add')) }
+    { isUpdate ? dispatch(setModalType('update')) : dispatch(setModalType('add')) }
   };
 
   const handleChange = (event, parent = undefined) => {
@@ -66,7 +66,7 @@ const UpdatePage = () => {
         </Grid>
         <Grid container justify="space-around">
           <TextField
-            onChange={(e) => {return handleChange(e, 'name');}}
+            onChange={(e) => { return handleChange(e, 'name'); }}
             value={student.name.firstName}
             name="firstName"
             label="First Name"
@@ -74,7 +74,7 @@ const UpdatePage = () => {
             className={classes.inputField}
           />
           <TextField
-            onChange={(e) => {return handleChange(e, 'name');}}
+            onChange={(e) => { return handleChange(e, 'name'); }}
             value={student.name.middleName}
             name="middleName"
             label="Middle Name"
@@ -82,7 +82,7 @@ const UpdatePage = () => {
             className={classes.inputField}
           />
           <TextField
-            onChange={(e) => {return handleChange(e, 'name');}}
+            onChange={(e) => { return handleChange(e, 'name'); }}
             value={student.name.lastName}
             name="lastName"
             label="Last Name"
@@ -90,7 +90,7 @@ const UpdatePage = () => {
             className={classes.inputField}
           />
           <TextField
-            onChange={(e) => {return handleChange(e);}}
+            onChange={(e) => { return handleChange(e); }}
             value={student.age}
             name="age"
             label="Age"
@@ -105,7 +105,7 @@ const UpdatePage = () => {
         <Grid container spacing={3} direction="row" justify="space-evenly">
           <Grid item xs>
             <TextField
-              onChange={(e) => {return handleChange(e, 'address');}}
+              onChange={(e) => { return handleChange(e, 'address'); }}
               value={student.address.houseNumber}
               name="houseNumber"
               label="House Number"
@@ -116,7 +116,7 @@ const UpdatePage = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              onChange={(e) => {return handleChange(e, 'address');}}
+              onChange={(e) => { return handleChange(e, 'address'); }}
               value={student.address.streetName}
               name="streetName"
               label="Street Name"
@@ -126,7 +126,7 @@ const UpdatePage = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              onChange={(e) => {return handleChange(e, 'address');}}
+              onChange={(e) => { return handleChange(e, 'address'); }}
               value={student.address.municipality}
               name="municipality"
               label="Municipality"
@@ -138,29 +138,17 @@ const UpdatePage = () => {
         <Grid container spacing={3} direction="row" justify="space-around">
           <Grid item xs>
             <TextField
-              onChange={(e) => {return handleChange(e, 'brgy');}}
-              value={student.address.brgy.brgyNumber}
-              name="brgyNumber"
-              label="Brgy. #"
-              type="Number"
+              onChange={(e) => { return handleChange(e, 'address'); }}
+              value={student.address.brgyName}
+              name="brgyName"
+              label="Brgy. Name"
               variant="outlined"
               className={classes.inputField}
             />
           </Grid>
           <Grid item xs>
             <TextField
-              onChange={(e) => {return handleChange(e, 'brgy');}}
-              value={student.address.brgy.zoneNumber}
-              name="zoneNumber"
-              label="Zone #"
-              type="Number"
-              variant="outlined"
-              className={classes.inputField}
-            />
-          </Grid>
-          <Grid item xs>
-            <TextField
-              onChange={(e) => {return handleChange(e, 'address');}}
+              onChange={(e) => { return handleChange(e, 'address'); }}
               value={student.address.postalCode}
               name="postalCode"
               label="Postal Code"

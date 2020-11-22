@@ -91,7 +91,7 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     const {
         firstName,
         middleName,
@@ -129,12 +129,8 @@ router.put('/:id', async (req, res) => {
         if (postalCode) {
             student.address.postalCode = postalCode;
         }
-
         if (brgyName) {
             student.address.brgyName = brgyName;
-        }
-        if (zoneNumber) {
-            student.address.zoneNumber = zoneNumber;
         }
         await student.save();
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Get all students
 
-const requestString = 'http://localhost:3000/students';
+const requestString = 'http://localhost:5000/students';
 
 export const getStudents = async () => {
   try {
@@ -46,8 +46,8 @@ export const addStudent = async (student) => {
 
 export const updateStudentByID = async (id, studentData) => {
   try {
+    console.log(studentData)
     const data = await axios.put(`${requestString}/${id}`, studentData);
-    console.log(data)
     return data;
   } catch (error) {
     console.log(error.message);

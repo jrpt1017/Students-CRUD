@@ -1,4 +1,4 @@
-import {remove} from 'lodash';
+import { remove } from 'lodash';
 
 const studentInfo = {
   id: '',
@@ -12,10 +12,7 @@ const studentInfo = {
     houseNumber: '',
     streetName: '',
     municipality: '',
-    brgy: {
-      brgyNumber: '',
-      zoneNumber: ''
-    },
+    brgyName: '',
     postalCode: '',
   }
 };
@@ -44,21 +41,6 @@ const studentsReducer = (state = initStore, action) => {
       };
     case "UPDATE_INFO":
       if (action.parent) {
-        if(action.parent === 'brgy') {
-          return {
-            ...state,
-            studentInfo: {
-              ...state.studentInfo,
-              address: {
-                ...state.studentInfo.address,
-                brgy: {
-                  ...state.studentInfo.address.brgy,
-                [action.payload.name]: action.payload.value,
-                }
-              }
-            }
-          }
-        }
         return {
           ...state,
           studentInfo: {

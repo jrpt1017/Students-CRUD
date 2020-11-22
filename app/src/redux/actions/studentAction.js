@@ -1,5 +1,5 @@
 import { getStudents, deleteStudentByID, getSingleStudent, addStudent, updateStudentByID } from "../../services/studentsService";
-import {history} from "../../index";
+import { history } from "../../index";
 
 const populateState = (students) => {
   return {
@@ -11,7 +11,7 @@ const populateState = (students) => {
 export const updateInfo = (name, value, parent) => {
   return {
     type: "UPDATE_INFO",
-    payload: {name, value},
+    payload: { name, value },
     parent,
   };
 };
@@ -36,7 +36,7 @@ export const getAllStudents = () => {
 export const dispatchDeleteStudent = (id) => {
   return async (dispatch) => {
     try {
-      const {status} = await deleteStudentByID(id);
+      const { status } = await deleteStudentByID(id);
       return (status === 201);
     } catch (error) {
       console.log(`Error: ${error.message}`);
@@ -47,6 +47,7 @@ export const dispatchDeleteStudent = (id) => {
 export const dispatchAddStudent = (student) => {
   return async (dispatch) => {
     try {
+      delete student.id;
       const { status } = await addStudent(student);
       if (status === 201) {
         dispatch(updateInfo(student));
@@ -76,7 +77,6 @@ export const dispatchGetSingleStudent = (id) => {
   return async (dispatch) => {
     try {
       const student = await getSingleStudent(id);
-      console.log(student)
       const studentObject = {};
       studentObject.firstName = student.name.firstName;
       studentObject.middleName = student.name.middleName;
@@ -85,8 +85,7 @@ export const dispatchGetSingleStudent = (id) => {
       studentObject.houseNumber = student.address.houseNumber;
       studentObject.streetName = student.address.streetName;
       studentObject.municipality = student.address.municipality;
-      studentObject.brgyNumber = student.address.brgy.brgyNumber;
-      studentObject.zoneNumber = student.address.brgy.zoneNumber;
+      studentObject.brgyName = student.address.brgyName;
       studentObject.postalCode = student.address.postalCode;
       dispatch({
         type: "GET_STUDENT",
