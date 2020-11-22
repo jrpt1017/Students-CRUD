@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Fade, Backdrop, Modal as MuiModal, Typography, Button, Paper, Grid } from '@material-ui/core';
 import { toggleModal } from '../../redux/actions/modalAction';
-import { dispatchAddStudent, dispatchUpdateStudent, dispatchDeleteStudent, getAllStudents } from '../../redux/actions/studentAction';
+import { dispatchAddStudent, dispatchUpdateStudent, dispatchDeleteStudent, getAllStudents, dispatchDeleteAllStudents } from '../../redux/actions/studentAction';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -44,6 +44,8 @@ const Modal = () => {
         return 'Update Student?';
       case 'delete':
         return 'Delete Student?';
+      case 'deleteAll':
+        return 'Delete all Students?';
     };
   };
 
@@ -57,8 +59,10 @@ const Modal = () => {
       isOperationSuccess = await dispatch(dispatchAddStudent(student))
     } else if (modal.modalType === 'update') {
       isOperationSuccess = await dispatch(dispatchUpdateStudent(id, student));
-    } else {
+    } else if (modal.modalType === 'delete') {
       isOperationSuccess = await dispatch(dispatchDeleteStudent(modal.id));
+    } else {
+      isOperationSuccess = await dispatch(dispatchDeleteAllStudents());
     }
     if (isOperationSuccess) {
       dispatch(toggleModal(false));

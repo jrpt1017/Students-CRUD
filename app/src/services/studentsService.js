@@ -31,6 +31,15 @@ export const deleteStudentByID = async (id) => {
   }
 };
 
+export const deleteAllRecords = async (id) => {
+  try {
+    const student = await axios.delete(requestString);
+    return student;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const addStudent = async (student) => {
   try {
     const data = await axios({

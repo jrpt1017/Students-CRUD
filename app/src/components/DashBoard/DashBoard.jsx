@@ -5,7 +5,7 @@ import {
   Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Button, ButtonGroup,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { getAllStudents, dispatchDeleteStudent } from "../../redux/actions/studentAction";
+import { getAllStudents, dispatchDeleteStudent, dispatchDeleteAllRecords } from "../../redux/actions/studentAction";
 import { toggleModal, setModalType, setModalID } from "../../redux/actions/modalAction";
 
 const columns = [
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(10, 30, 10, 30),
     flexGrow: 1,
   },
-  addStudent: {
+  controlButtons: {
     margin: 12,
   },
   link: {
@@ -81,11 +81,23 @@ const DashBoard = () => {
     dispatch(setModalID(id));
   };
 
+  const handleDeleteAllRecords = () => {
+    dispatch(toggleModal(true));
+    dispatch(setModalType('deleteAll'));
+  };
+
   return (
     <Paper className={classes.root}>
       <Link to="addStudent" className={classes.link}>
-        <Button color="primary" variant="contained" className={classes.addStudent}>Add Student</Button>
+        <Button color="primary" variant="contained" className={classes.controlButtons}>Add Student</Button>
       </Link>
+      <Button
+        color="secondary"
+        variant="outlined"
+        onClick={handleDeleteAllRecords}
+        className={classes.controlButtons}
+        disabled={data().length === 0}
+      >Delete All Records</Button>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

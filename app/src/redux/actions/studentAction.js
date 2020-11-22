@@ -1,4 +1,4 @@
-import { getStudents, deleteStudentByID, getSingleStudent, addStudent, updateStudentByID } from "../../services/studentsService";
+import { getStudents, deleteStudentByID, getSingleStudent, addStudent, updateStudentByID, deleteAllRecords } from "../../services/studentsService";
 import { history } from "../../index";
 
 const populateState = (students) => {
@@ -42,6 +42,15 @@ export const dispatchDeleteStudent = (id) => {
       console.log(`Error: ${error.message}`);
     }
   };
+};
+
+export const dispatchDeleteAllStudents = () => async (dispatch) => {
+  try {
+    const { status } = await deleteAllRecords();
+    return (status === 201);
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+  }
 };
 
 export const dispatchAddStudent = (student) => {
